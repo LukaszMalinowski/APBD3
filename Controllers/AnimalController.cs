@@ -1,7 +1,8 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using cwiczenia3_zen_s19743.Model;
-using cwiczenia3_zen_s19743.Repository;
+using cwiczenia3_zen_s19743.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cwiczenia3_zen_s19743.Controllers
@@ -10,24 +11,32 @@ namespace cwiczenia3_zen_s19743.Controllers
     [ApiController]
     public class AnimalController : ControllerBase
     {
-        private readonly IAnimalRepository _repository;
+        private readonly IAnimalService _service;
 
-        public AnimalController(IAnimalRepository repository)
+        public AnimalController(IAnimalService service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         [HttpGet]
         public IActionResult GetSortedAnimals(string? orderBy = "name")
         {
-            List<Animal> animals = _repository.GetSortedAnimals(orderBy);
+            List<Animal> animals;
+            try
+            {
+                animals = _service.GetSortedAnimals(orderBy);
+            }
+            catch (BadHttpRequestException e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok(animals);
         }
         
         [HttpPost]
         public IActionResult AddAnimal([FromBody]Animal newAnimal)
         {
-            Animal animal = _repository.AddAnimal(newAnimal);
+            Animal animal = _service.AddAnimal(newAnimal);
             return Ok(animal);
         }
         
@@ -35,7 +44,7 @@ namespace cwiczenia3_zen_s19743.Controllers
         [Route("{animalId}")]
         public IActionResult UpdateAnimal(long animalId, [FromBody]Animal newAnimal)
         {
-            Animal animal = _repository.UpdateAnimal(animalId, newAnimal);
+            Animal animal = _service.UpdateAnimal(animalId, newAnimal);
             return Ok(animal);
         }
         
@@ -43,7 +52,7 @@ namespace cwiczenia3_zen_s19743.Controllers
         [Route("{animalId}")]
         public IActionResult UpdateAnimal(long animalId)
         {
-            _repository.DeleteAnimal(animalId);
+            _service.DeleteAnimal(animalId);
             return Ok();
         }
     }

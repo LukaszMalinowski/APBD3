@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cwiczenia3_zen_s19743.Repository;
+using cwiczenia3_zen_s19743.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,8 +29,8 @@ namespace cwiczenia3_zen_s19743
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAnimalRepository, AnimalRepository>();
+            services.AddScoped<IAnimalService, AnimalService>();
 
-            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
