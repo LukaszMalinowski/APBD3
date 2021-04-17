@@ -30,19 +30,20 @@ namespace cwiczenia3_zen_s19743.Controllers
             {
                 return BadRequest(e.Message);
             }
+
             return Ok(animals);
         }
-        
+
         [HttpPost]
-        public IActionResult AddAnimal([FromBody]Animal newAnimal)
+        public IActionResult AddAnimal([FromBody] Animal newAnimal)
         {
             Animal animal = _service.AddAnimal(newAnimal);
             return Ok(animal);
         }
-        
+
         [HttpPut]
         [Route("{animalId}")]
-        public IActionResult UpdateAnimal(long animalId, [FromBody]Animal newAnimal)
+        public IActionResult UpdateAnimal(long animalId, [FromBody] Animal newAnimal)
         {
             Animal animal;
             try
@@ -53,9 +54,10 @@ namespace cwiczenia3_zen_s19743.Controllers
             {
                 return BadRequest(e.Message);
             }
+
             return Ok(animal);
         }
-        
+
         [HttpDelete]
         [Route("{animalId}")]
         public IActionResult UpdateAnimal(long animalId)
@@ -68,6 +70,7 @@ namespace cwiczenia3_zen_s19743.Controllers
             {
                 return BadRequest(e.Message);
             }
+
             return Ok();
         }
     }

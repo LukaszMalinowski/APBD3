@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using cwiczenia3_zen_s19743.Model;
 using Microsoft.Extensions.Configuration;
@@ -74,7 +73,7 @@ namespace cwiczenia3_zen_s19743.Repository
             command.Parameters.AddWithValue("@category", animal.Category);
             command.Parameters.AddWithValue("@area", animal.Area);
 
-            
+
             command.ExecuteNonQuery();
 
             return animal;
@@ -86,7 +85,8 @@ namespace cwiczenia3_zen_s19743.Repository
             SqlCommand command = new SqlCommand
             {
                 Connection = connection,
-                CommandText = "UPDATE Animal SET Name = @name, Description = @description, Category = @category, Area = @area WHERE IdAnimal = @idAnimal"
+                CommandText =
+                    "UPDATE Animal SET Name = @name, Description = @description, Category = @category, Area = @area WHERE IdAnimal = @idAnimal"
             };
 
             command.Parameters.AddWithValue("@idAnimal", animalId);
@@ -94,7 +94,7 @@ namespace cwiczenia3_zen_s19743.Repository
             command.Parameters.AddWithValue("@description", animal.Description);
             command.Parameters.AddWithValue("@category", animal.Category);
             command.Parameters.AddWithValue("@area", animal.Area);
-            
+
             connection.Open();
             command.ExecuteNonQuery();
 
@@ -112,7 +112,7 @@ namespace cwiczenia3_zen_s19743.Repository
             };
 
             command.Parameters.AddWithValue("@idAnimal", animalId);
-           
+
             connection.Open();
             return command.ExecuteNonQuery();
         }
