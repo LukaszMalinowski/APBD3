@@ -82,7 +82,24 @@ namespace cwiczenia3_zen_s19743.Repository
 
         public Animal UpdateAnimal(long animalId, Animal animal)
         {
-            throw new System.NotImplementedException();
+            using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("PjatkDb"));
+            SqlCommand command = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = "UPDATE Animal SET Name = @name, Description = @description, Category = @category, Area = @area WHERE IdAnimal = @idAnimal"
+            };
+
+            command.Parameters.AddWithValue("@idAnimal", animalId);
+            command.Parameters.AddWithValue("@name", animal.Name);
+            command.Parameters.AddWithValue("@description", animal.Description);
+            command.Parameters.AddWithValue("@category", animal.Category);
+            command.Parameters.AddWithValue("@area", animal.Area);
+            
+            connection.Open();
+            command.ExecuteNonQuery();
+
+            animal.IdAnimal = animalId;
+            return animal;
         }
 
         public void DeleteAnimal(long animalId)

@@ -35,7 +35,9 @@ namespace cwiczenia3_zen_s19743.Service
 
         public Animal UpdateAnimal(long animalId, Animal animal)
         {
-            throw new System.NotImplementedException();
+            if (animal.IdAnimal != null && animal.IdAnimal != animalId)
+                throw new BadHttpRequestException("Id's don't match.");
+            return _repository.UpdateAnimal(animalId, animal);
         }
 
         public void DeleteAnimal(long animalId)
