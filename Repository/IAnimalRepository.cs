@@ -11,6 +11,6 @@ namespace cwiczenia3_zen_s19743.Repository
 
         Animal UpdateAnimal(long animalId, Animal animal);
 
-        void DeleteAnimal(long animalId);
+        int DeleteAnimal(long animalId);
     }
 }

@@ -102,9 +102,19 @@ namespace cwiczenia3_zen_s19743.Repository
             return animal;
         }
 
-        public void DeleteAnimal(long animalId)
+        public int DeleteAnimal(long animalId)
         {
-            throw new System.NotImplementedException();
+            using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("PjatkDb"));
+            SqlCommand command = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = "DELETE FROM Animal WHERE IdAnimal = @idAnimal"
+            };
+
+            command.Parameters.AddWithValue("@idAnimal", animalId);
+           
+            connection.Open();
+            return command.ExecuteNonQuery();
         }
     }
 }

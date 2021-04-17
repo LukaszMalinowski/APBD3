@@ -42,7 +42,9 @@ namespace cwiczenia3_zen_s19743.Service
 
         public void DeleteAnimal(long animalId)
         {
-            throw new System.NotImplementedException();
+            int affectedRows = _repository.DeleteAnimal(animalId);
+            if (affectedRows < 1)
+                throw new BadHttpRequestException("No animals deleted");
         }
     }
 }

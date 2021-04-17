@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using cwiczenia3_zen_s19743.Model;
 using cwiczenia3_zen_s19743.Service;
@@ -61,7 +60,14 @@ namespace cwiczenia3_zen_s19743.Controllers
         [Route("{animalId}")]
         public IActionResult UpdateAnimal(long animalId)
         {
-            _service.DeleteAnimal(animalId);
+            try
+            {
+                _service.DeleteAnimal(animalId);
+            }
+            catch (BadHttpRequestException e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok();
         }
     }
